@@ -1,0 +1,15 @@
+{
+  "name": "ws-bot",
+  "version": "1.0.0",
+  "description": "A Personal Bot for Submissions",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "start": "nodemon index.js"
+  },
+  "author": "Akshay Vats",
+  "license": "ISC",
+  "dependencies": {
+    "discord.js": "^12.5.1"
+  }
+}
