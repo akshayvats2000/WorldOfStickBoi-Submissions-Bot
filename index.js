@@ -3,26 +3,19 @@ const client = new Discord.Client();
 const token = process.env.token;
 
 const serverManager = require('./controller/serverManager');
+const messageManager = require('./controller/messageManager');
 
 client.once('ready', () => {
     console.log('Bot is Up');
 });
 
-// client.on('message', message => {
-//     if (!message.author.bot) {
-//         for (const attachments of message.attachments) {
-//             for (const attachment of attachments) {
-//                 if (attachment.url) {
-//                     message.channel.send(attachment.url)
-//                     .then(() => {
-//                         message.delete();
-//                     })
-//                 }
-//             }
-//         }
-//     }
-// })
+client.on('message', message => {
+    messageManager.linkDetector(message);
+    messageManager.videoDetector(message);
+});
 
 client.on('guildMemberAdd', member => serverManager.newMember(member));
+
+client.on('guildMemberRemove', member => serverManager.removeMember(member));
 
 client.login(token);

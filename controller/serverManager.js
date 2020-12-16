@@ -17,8 +17,35 @@ module.exports.newMember = function (member) {
                             deny: ['VIEW_CHANNEL']
                         }
                     ])
+                    member.guild.roles.create({
+                        data: {
+                            name: member.user.username
+                        }
+                    })
+                    .then(role => {
+                        member.roles.add(role)
+                    })
                 })
                 .catch(console.error)
+            }
+        }
+    }
+}
+
+module.exports.removeMember = function (member) {
+    for (const channels of member.guild.channels.cache) {
+        for (const channel of channels) {
+            if (typeof(channel.name) == 'string' && channel.name == member.user.username.toLowerCase()) {
+                channel.delete()
+                .then(() => {
+                    for (const roles of member.roles.cache) {
+                        for (const role of roles) {
+                            if (typeof(role.name) == 'string' && role.name == member.user.username) {
+                                role.delete()
+                            }
+                        }
+                    }
+                })
             }
         }
     }
